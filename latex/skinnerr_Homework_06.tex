@@ -1,0 +1,118 @@
+\documentclass[11pt]{article}
+
+\input{../../Latex_Common/skinnerr_latex_preamble_asen5417.tex}
+
+%%
+%% DOCUMENT START
+%%
+
+\begin{document}
+
+\pagestyle{fancyplain}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{\hrule ASEN 5417: Homework 7}
+\cfoot{\hrule \thepage}
+\rfoot{\hrule Ryan Skinner}
+
+\noindent
+{\Large Homework 7}
+\hfill
+{\large Ryan Skinner}
+\\[0.5ex]
+{\large ASEN 5417: Numerical Methods}
+\hfill
+{\large Due 2015/12/1}\\
+\hrule
+\vspace{6pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction} %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Consider the non-linear, inviscid Burgers equation for $u(x,t)$,
+\begin{equation}
+\pp{u}{t} + u \pp{u}{x} = 0
+\;,
+\end{equation}
+with the initial conditions
+\begin{equation}
+\begin{aligned}
+u(x,0) &= 10 &\quad 0  \le\; &x \le 30 \;, \\
+u(x,0) &= 0  &\quad 30 \le\; &x \le 40 \;.
+\end{aligned}
+\end{equation}
+
+Use the following finite-difference approximations to numerically integrate this equation using appropriate Dirichlet or Neumann BCs on an x-grid with $\Delta x = 0.2$:
+\begin{enumerate}
+\item MacCormack explicit method
+\item Beam and Warming implicit method
+\end{enumerate}
+
+Note that the second method  may require the incorporation of a smoothing operator added directly to the finite difference formula. Using a fourth-order artificial viscosity, optimize the coefficient of this operator for minimum amplitude errors,
+\begin{equation}
+D_\epsilon = - \epsilon(\Delta x)^4 \pp{^4 V}{x^4}
+\;,
+\end{equation}
+where the negative sign ensures that positive dissipation is produced. Using central differences, we obtain
+\begin{equation}
+\epsilon(\Delta x)^4 \pp{^4 V}{x^4} = V_{i-2} -4V_{i-1} +6V_i -4V{i+1} +V{i+2}
+\;.
+\end{equation}
+The coefficient $\epsilon$ generally obeys $0 \le \epsilon \le 1/8$, with a preferred value of $\epsilon = 0.1$.
+
+For both methods, plot the solutions at intervals of about two time units up to about $t=8$ time units. Obtain solutions for condition numbers of $CN = \{\tfrac{3}{4}, 1, \tfrac{5}{4}\}$. Comment on the stability of the scheme and dispersive/dissipative errors.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Methodology} %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\begin{figure}[h!]
+%\begin{center}
+%\includegraphics[scale=0.6]{Prob2_convergence.eps}
+%\includegraphics[scale=0.6]{Prob2_contours.eps}
+%\\[0.5cm]
+%\caption{Convergence behavior and contours of $U$ for Problem 2. Neighboring values of $\omega = 1.937$ and $\omega = 1.940$ both converge in 202 iterations.}
+%\label{fig:Prob2}
+%\end{center}
+%\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion} %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{References} %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+No external references were used other than the course notes for this assignment.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Appendix: MATLAB Code} %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The following code listings generate all figures presented in this homework assignment.
+
+%\includecode{Problem_1.m}
+
+%%
+%% DOCUMENT END
+%%
+\end{document}

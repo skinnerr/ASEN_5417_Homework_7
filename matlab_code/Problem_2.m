@@ -9,24 +9,26 @@ function [] = Problem_2()
     Set_Default_Plot_Properties();
     
     % For each Courant number...
-    for C = [0.75, 1.00, 1.25]
-%     for C = 1.00
+%     for C = [0.75, 1.00, 1.25]
+    for C = 0.75
+        epsilon = 1/10;
         
         %%%
         % Define variables specific to the boundary-value problem.
         %%%
 
         % Solution domain.
-        dx = 0.2;
-        x = (0:dx:40)';
+        dx = 1;
+        x_min = 0;
+        x_max = 60;
+        x = (x_min:dx:x_max)';
         N = length(x);
         t = 0;
-        dt_history = 0;
 
         % Initialize the solution, indexed by (x,y), and set BCs.
         u = zeros(N,1);
         for i = 1:length(x)
-            if x(i) <= 30
+            if x(i) <= 15
                 u(i) = 10;
             end
         end
@@ -34,28 +36,18 @@ function [] = Problem_2()
         %%%
         % Solve problem numerically.
         %%%
-        
-        direction_flag = true;
 
         % Solve problem up to t~8.
         while t(end) < 8
             
             u_n = u(:,end);
-            u_np1 = nan(N,1);
-            dt = 0.1;
-            t(end+1) = t + dt;
+            dt = C * dx / max(u_n);
+            t(end+1) = t(end) + dt;
             
             % Beam and Warming implicit iteration.
-            for i = 2:N-1
-                [diag, sub, sup, rhs] = Assemble_BeamWarming(u_n, );
-                [sol] = Thomas(diag, sub, sup, rhs);
-                u(:,j) = [BC.uw; sol; BC.ue];
-            end
-
-            if any(u_np1 > 1e3)
-                fprintf('Courant number %.2f diverged.', C);
-                break
-            end
+            [diag, sub, sup, rhs] = Assemble_BeamWarming(u_n, epsilon, dt, dx);
+            [sol] = Thomas(diag, sub, sup, rhs);
+            u_np1 = [10; sol; 0];
             
             % Update solution.
             u(:,end+1) = u_np1;
@@ -81,7 +73,7 @@ function [] = Problem_2()
         xlabel('x');
         ylabel('u');
         ylim([0,12.5]);
-        xlim([0,40]);
+        xlim([x_min,x_max]);
         hleg = legend('show');
         set(hleg,'Location','southwest');
         
@@ -94,14 +86,14 @@ function [] = Problem_2()
         xlabel('x');
         ylabel('u');
         ylim([0,12.5]);
-        xlim([0,40]);
+        xlim([x_min,x_max]);
         
         figure();
         surf(x,t,u');
         xlabel('x');
         ylabel('t');
         title(sprintf('C = %.2f',C));
-        xlim([0,40]);
+        xlim([x_min,x_max]);
         ylim([min(t),max(t)]);
         zlim([0,15]);
         

@@ -45,7 +45,7 @@ function [] = Problem_1()
             u_np1 = nan(N,1);
 
             % Calculate time step.
-            dt = C * dx / max(u(:,end));
+            dt = C * dx / max(u_n);
             dt_history(end+1) = dt;
             t(end+1) = t(end) + dt;
             

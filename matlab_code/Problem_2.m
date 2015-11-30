@@ -10,8 +10,8 @@ function [] = Problem_2()
     
     % For each Courant number...
 %     for C = [0.75, 1.00, 1.25]
-    for C = 0.75
-        epsilon = 1/10;
+    for C = 1.00
+        epsilon = 0.05;
         
         %%%
         % Define variables specific to the boundary-value problem.
@@ -48,6 +48,7 @@ function [] = Problem_2()
             [diag, sub, sup, rhs] = Assemble_BeamWarming(u_n, epsilon, dt, dx);
             [sol] = Thomas(diag, sub, sup, rhs);
             u_np1 = [10; sol; 0];
+%             u_np1(1:10) = 10;
             
             % Update solution.
             u(:,end+1) = u_np1;
@@ -63,7 +64,7 @@ function [] = Problem_2()
         cmap = winter(n_plot);
         step_numbers = round(linspace(1,length(t),n_plot));
         hf = figure(round(C*10));
-        set(hf,'Position',[100,500,1100,350]);
+        set(hf,'Position',[100,500,900,300]);
         hold on;
         for i = 1:length(step_numbers)
             tmp = sprintf('t = %.2f', t(step_numbers(i)));
@@ -72,41 +73,45 @@ function [] = Problem_2()
         title(sprintf('C = %.2f',C));
         xlabel('x');
         ylabel('u');
-        ylim([0,12.5]);
+        ylim([0,15]);
         xlim([x_min,x_max]);
         hleg = legend('show');
         set(hleg,'Location','southwest');
         
-        % Solution at t~8, comparing Courant numbers.
-        hf = figure(1);
-        set(hf,'Position',[100,500,1100,350]);
-        hold on;
-        tmp = sprintf('C = %.2f, t = %.2f', C, t(end));
-        plot(x, u(:,end), 'DisplayName', tmp);
-        xlabel('x');
-        ylabel('u');
-        ylim([0,12.5]);
-        xlim([x_min,x_max]);
+%         % Solution at t~8, comparing Courant numbers.
+%         hf = figure(1);
+%         set(hf,'Position',[100,500,900,300]);
+%         hold on;
+%         tmp = sprintf('C = %.2f, t = %.2f', C, t(end));
+%         plot(x, u(:,end), 'DisplayName', tmp);
+%         xlabel('x');
+%         ylabel('u');
+%         ylim([0,15]);
+%         xlim([50,60]);
         
-        figure();
-        surf(x,t,u');
-        xlabel('x');
-        ylabel('t');
-        title(sprintf('C = %.2f',C));
-        xlim([x_min,x_max]);
-        ylim([min(t),max(t)]);
-        zlim([0,15]);
+%         figure();
+%         surf(x,t,u');
+%         xlabel('x');
+%         ylabel('t');
+%         title(sprintf('C = %.2f',C));
+%         xlim([x_min,x_max]);
+%         ylim([min(t),max(t)]);
+%         zlim([0,15]);
         
     end
-    
-    figure(1);
-    hleg = legend('show');
-    set(hleg,'Location','southwest');
+
+%     figure(1);
+%     hleg = legend('show');
+%     set(hleg,'Location','southwest');
     
     disp('Done.');
     return
     
 end
+
+
+
+
 
 
 

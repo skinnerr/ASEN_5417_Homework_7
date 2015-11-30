@@ -27,8 +27,8 @@ function [diag, sub, sup, rhs] = Assemble_BeamWarming( u, epsilon, dt, dx )
            - (1/4) * (dt/dx) *  u(diag_range-1).^2 ;
     
     % Account for boundaries.
-    rhs(1)   = rhs(1)   + (1/4) * (dt/dx) * u(1);
-    rhs(end) = rhs(end) - (1/4) * (dt/dx) * u(N);
+    rhs(1)   = rhs(1)   + (1/4) * (dt/dx) * 10;
+    rhs(end) = rhs(end) - (1/4) * (dt/dx) *  0;
     
     % Add the artificial viscosity.
     Deps = zeros(length(diag_range),1);

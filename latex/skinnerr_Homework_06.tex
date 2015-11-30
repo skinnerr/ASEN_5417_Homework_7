@@ -46,7 +46,7 @@ u(x,0) &= 0  &\quad 30 \le\; &x \le 40 \;.
 \end{aligned}
 \end{equation}
 
-Use the following finite-difference approximations to numerically integrate this equation using appropriate Dirichlet or Neumann BCs on an x-grid with $\Delta x = 0.2$:
+Use the following finite-difference approximations to numerically integrate this equation using appropriate Dirichlet or Neumann BCs on an $x$-grid with $\Delta x = 0.2$:
 \begin{enumerate}
 \item MacCormack explicit method
 \item Beam and Warming implicit method
@@ -64,7 +64,7 @@ where the negative sign ensures that positive dissipation is produced. Using cen
 \end{equation}
 The coefficient $\epsilon$ generally obeys $0 \le \epsilon \le 1/8$, with a preferred value of $\epsilon = 0.1$.
 
-For both methods, plot the solutions at intervals of about two time units up to about $t=8$ time units. Obtain solutions for condition numbers of $CN = \{\tfrac{3}{4}, 1, \tfrac{5}{4}\}$. Comment on the stability of the scheme and dispersive/dissipative errors.
+For both methods, plot the solutions at intervals of about two time units up to about $t=8$ time units. Obtain solutions for Courant numbers of $C = \{\tfrac{3}{4}, 1, \tfrac{5}{4}\}$. Comment on the stability of the scheme and dispersive/dissipative errors.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -80,7 +80,7 @@ For both methods, plot the solutions at intervals of about two time units up to 
 
 %\begin{figure}[h!]
 %\begin{center}
-%\includegraphics[scale=0.6]{Prob2_convergence.eps}
+%\includegraphics[scale=0.6]{Prob1.eps}
 %\includegraphics[scale=0.6]{Prob2_contours.eps}
 %\\[0.5cm]
 %\caption{Convergence behavior and contours of $U$ for Problem 2. Neighboring values of $\omega = 1.937$ and $\omega = 1.940$ both converge in 202 iterations.}

@@ -6,13 +6,12 @@ function [] = Problem_1()
     % Ryan Skinner, November 2015
     %%%
     
-    clear all;
-    
     Set_Default_Plot_Properties();
     
     % For each Courant number...
     for C = [0.75, 1.00, 1.25]
-    
+%     for C = 1.00
+        
         %%%
         % Define variables specific to the boundary-value problem.
         %%%
@@ -42,7 +41,8 @@ function [] = Problem_1()
         while t(end) < 8
             
             u_n = u(:,end);
-            u_hat = nan(N,1);
+            F_n = u.^2 / 2;
+            u_h = nan(N,1);
             u_np1 = nan(N,1);
 
             % Calculate time step.
@@ -52,30 +52,41 @@ function [] = Problem_1()
             
             % MacCormack iterations, switching direction each time step.
             
-            calc_u_hat = @(t,x,uni,unip1)     uni - uni * (t/x) * (unip1 - uni);
-            calc_u_np1 = @(t,x,uni,uhi,uhip1) 0.5 * ( (uni + uhi) ...
-                                                     - uni * (t/x) * (uhip1 - uhi) );
+            calc_u_hat = @(uni,Fnip1,Fni)       uni                                  ...
+                                                    - (dt/dx) * (Fnip1 - Fni);
+            calc_u_np1 = @(uni,uhi,Fhip1,Fhi) ( uni + uhi                            ...
+                                                    - (dt/dx) * (Fhip1 - Fhi) ) / 2;
             
-%             direction_flag = ~direction_flag;
+            direction_flag = ~direction_flag;
             if direction_flag
+                
                 for i = 1:N-1
-                    u_hat(i) = calc_u_hat(dt, dx, u_n(i), u_n(i+1));
+                    u_h(i) = calc_u_hat(u_n(i), F_n(i+1), F_n(i));
                 end
-                u_hat(N) = 0;
+                u_h(N) = u_h(N-1);
+                F_h = u_h.^2 / 2;
+                
                 for i = 2:N
-                    u_np1(i) = calc_u_np1(dt, dx, u_n(i), u_hat(i-1), u_hat(i));
+                    u_np1(i) = calc_u_np1(u_n(i), u_h(i), F_h(i), F_h(i-1));
                 end
-                u_np1(1) = 10;
+                u_np1(1) = u_np1(2);
+                
             else
+                
                 for i = 2:N
-                    u_hat(i) = calc_u_hat(dt, dx, u_n(i-1), u_n(i));
+                    u_h(i) = calc_u_hat(u_n(i), F_n(i), F_n(i-1));
                 end
-                u_hat(1) = 0;
+                u_h(1) = u_h(2);
+                F_h = u_h.^2 / 2;
+                
                 for i = 1:N-1
-                    u_np1(i) = calc_u_np1(dt, dx, u_n(i), u_hat(i), u_hat(i+1));
+                    u_np1(i) = calc_u_np1(u_n(i), u_h(i), F_h(i+1), F_h(i));
                 end
-                u_np1(N) = 0;
+                u_np1(N) = u_np1(N-1);
+                
             end
+            
+%             plot(x,u_np1);
             
             % Update solution.
             u(:,end+1) = u_np1;

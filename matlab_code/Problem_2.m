@@ -11,8 +11,7 @@ function [] = Problem_2()
     clear
     
     % For each Courant number...
-%     for C = [0.75, 1.00, 1.25]
-    for C = 1.00
+    for C = [0.75, 1.00, 1.25]
         epsilon = 0.1;
         
         %%%
@@ -50,7 +49,7 @@ function [] = Problem_2()
             [diag, sub, sup, rhs] = Assemble_BeamWarming(u_n, epsilon, dt, dx);
             [sol] = Thomas(diag, sub, sup, rhs);
             u_np1 = [10; sol; 0];
-%             u_np1(1:10) = 10;
+            u_np1(1:10) = 10;
             
             % Update solution.
             u(:,end+1) = u_np1;
@@ -80,31 +79,23 @@ function [] = Problem_2()
         hleg = legend('show');
         set(hleg,'Location','southwest');
         
-%         % Solution at t~8, comparing Courant numbers.
-%         hf = figure(1);
-%         set(hf,'Position',[100,500,900,300]);
-%         hold on;
-%         tmp = sprintf('C = %.2f, t = %.2f', C, t(end));
-%         plot(x, u(:,end), 'DisplayName', tmp);
-%         xlabel('x');
-%         ylabel('u');
-%         ylim([0,15]);
-%         xlim([50,60]);
-        
-%         figure();
-%         surf(x,t,u');
-%         xlabel('x');
-%         ylabel('t');
-%         title(sprintf('C = %.2f',C));
-%         xlim([x_min,x_max]);
-%         ylim([min(t),max(t)]);
-%         zlim([0,15]);
+        % Solution at t~8, comparing Courant numbers.
+        hf = figure(1);
+        set(hf,'Position',[100,500,900,300]);
+        hold on;
+        tmp = sprintf('C = %.2f, t = %.2f', C, t(end));
+        plot(x, u(:,end), 'DisplayName', tmp);
+        text(50.1,2.5,sprintf('Epsilon = %.3f', epsilon),'FontSize',14);
+        xlabel('x');
+        ylabel('u');
+        ylim([0,15]);
+        xlim([50,60]);
         
     end
 
-%     figure(1);
-%     hleg = legend('show');
-%     set(hleg,'Location','southwest');
+    figure(1);
+    hleg = legend('show');
+    set(hleg,'Location','northeast');
     
     disp('Done.');
     return

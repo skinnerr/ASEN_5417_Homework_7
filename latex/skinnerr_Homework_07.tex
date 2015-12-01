@@ -80,12 +80,39 @@ For both methods, plot the solutions at intervals of about two time units up to 
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=0.95\textwidth]{Prob1_C075.eps}
-\includegraphics[width=0.95\textwidth]{Prob1_C100.eps}
-\includegraphics[width=0.95\textwidth]{Prob1_C125.eps}
-\includegraphics[width=0.95\textwidth]{Prob1_t8.eps}
+\includegraphics[width=0.85\textwidth]{Prob1_C075.eps} \\
+\includegraphics[width=0.85\textwidth]{Prob1_C100.eps} \\
+\includegraphics[width=0.85\textwidth]{Prob1_C125.eps} \\
+\includegraphics[width=0.85\textwidth]{Prob1_t8.eps}
 \\[0.5cm]
-\caption{MacCormack method solution for different condition numbers, and comparison at time $t \sim 8$.}
+\caption{MacCormack method solution for different Courant numbers, and comparison at time $t \sim 8$. The Courant number is seen to substantially affect the accuracy of the results.}
+\label{fig:MacCormack}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.85\textwidth]{Prob2_eps0125.eps} \vspace*{-0.5cm} \\
+\includegraphics[width=0.85\textwidth]{Prob2_eps0100.eps} \vspace*{-0.5cm} \\
+\includegraphics[width=0.85\textwidth]{Prob2_eps0075.eps} \vspace*{-0.5cm} \\
+\includegraphics[width=0.85\textwidth]{Prob2_eps0050.eps} \vspace*{-0.5cm} \\
+\includegraphics[width=0.85\textwidth]{Prob2_eps0025.eps} \vspace*{-0.5cm} \\
+\includegraphics[width=0.85\textwidth]{Prob2_eps0010.eps} \vspace*{-0.5cm} \\
+\includegraphics[width=0.85\textwidth]{Prob2_eps0001.eps}
+\\[0.5cm]
+\caption{Beam and Warming solution for different values of the dissipation term's coefficient $\epsilon$. Solutions at time $t \sim 8$ are shown for different Courant numbers in each plot. The solution diverged for values of $\epsilon$ even a few percent above 0.125. A value of $\epsilon=0.1$ appears to be sufficient.}
+\label{fig:BeamWarming_Epsilon}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.85\textwidth]{Prob2_C075.eps} \\
+\includegraphics[width=0.85\textwidth]{Prob2_C100.eps} \\
+\includegraphics[width=0.85\textwidth]{Prob2_C125.eps} \\
+\includegraphics[width=0.85\textwidth]{Prob2_t8.eps}
+\\[0.5cm]
+\caption{Beam and Warming method solution for three Courant numbers, and comparison at time $t \sim 8$. The dissipation coefficient is $\epsilon = 0.1$. Little difference is observed between different Courant numbers.}
 \label{fig:MacCormack}
 \end{center}
 \end{figure}

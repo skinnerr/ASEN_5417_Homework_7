@@ -13,14 +13,14 @@ function [] = Problem_2()
     % For each Courant number...
 %     for C = [0.75, 1.00, 1.25]
     for C = 1.00
-        epsilon = 0.05;
+        epsilon = 0.1;
         
         %%%
         % Define variables specific to the boundary-value problem.
         %%%
 
         % Solution domain.
-        dx = 1;
+        dx = 0.2;
         x_min = 0;
         x_max = 60;
         x = (x_min:dx:x_max)';

@@ -35,31 +35,19 @@ function [diag, sub, sup, rhs] = Assemble_BeamWarming( u, epsilon, dt, dx )
     for i = 1:length(diag_range)
         ii = i+1;
         
-        if ii-2 > 0
-            De(i) = De(i) +     u(ii-2);
-        else
-            De(i) = De(i) +     10;
-        end
+        if ii-2 > 0 tmp=u(ii-2); else tmp=10; end
+        De(i) = De(i) + tmp;
         
-        if ii-1 > 0
-            De(i) = De(i) - 4 * u(ii-1);
-        else
-            De(i) = De(i) - 4 * 10;
-        end
+        if ii-1 > 0 tmp = -4*u(ii-1); else tmp=-4*10; end
+        De(i) = De(i) + tmp;
         
-            De(i) = De(i) + 6 * u(ii);
+        De(i) = De(i) + 6 * u(ii);
             
-        if ii+1 < N+1
-            De(i) = De(i) - 4 * u(ii+1);
-        else
-            De(i) = De(i) - 4 *  0;
-        end
+        if ii+1 < N+1 tmp=-4*u(ii+1); else tmp=0; end
+        De(i) = De(i) + tmp;
         
-        if ii+2 < N+1
-            De(i) = De(i) +     u(ii+2);
-        else
-            De(i) = De(i) +      0;
-        end
+        if ii+2 < N+1 tmp=u(ii+2); else tmp=0; end
+        De(i) = De(i) + tmp;
     end
     De = -epsilon * De;
     rhs = rhs + De;

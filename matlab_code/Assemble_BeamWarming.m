@@ -31,37 +31,37 @@ function [diag, sub, sup, rhs] = Assemble_BeamWarming( u, epsilon, dt, dx )
     rhs(end) = rhs(end) - (1/4) * (dt/dx) *  0;
     
     % Add the artificial viscosity.
-    Deps = zeros(length(diag_range),1);
+    De = zeros(length(diag_range),1);
     for i = 1:length(diag_range)
         ii = i+1;
         
         if ii-2 > 0
-            Deps(i) = Deps(i) +     u(ii-2);
+            De(i) = De(i) +     u(ii-2);
         else
-            Deps(i) = Deps(i) +     10;
+            De(i) = De(i) +     10;
         end
         
         if ii-1 > 0
-            Deps(i) = Deps(i) - 4 * u(ii-1);
+            De(i) = De(i) - 4 * u(ii-1);
         else
-            Deps(i) = Deps(i) - 4 * 10;
+            De(i) = De(i) - 4 * 10;
         end
         
-            Deps(i) = Deps(i) + 6 * u(ii);
+            De(i) = De(i) + 6 * u(ii);
             
         if ii+1 < N+1
-            Deps(i) = Deps(i) - 4 * u(ii+1);
+            De(i) = De(i) - 4 * u(ii+1);
         else
-            Deps(i) = Deps(i) - 4 *  0;
+            De(i) = De(i) - 4 *  0;
         end
         
         if ii+2 < N+1
-            Deps(i) = Deps(i) +     u(ii+2);
+            De(i) = De(i) +     u(ii+2);
         else
-            Deps(i) = Deps(i) +      0;
+            De(i) = De(i) +      0;
         end
     end
-    Deps = -epsilon * Deps;
-    rhs = rhs + Deps;
+    De = -epsilon * De;
+    rhs = rhs + De;
 
 end

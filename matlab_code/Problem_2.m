@@ -8,6 +8,8 @@ function [] = Problem_2()
     
     Set_Default_Plot_Properties();
     
+    clear
+    
     % For each Courant number...
 %     for C = [0.75, 1.00, 1.25]
     for C = 1.00

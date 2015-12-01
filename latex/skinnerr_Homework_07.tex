@@ -54,12 +54,12 @@ Use the following finite-difference approximations to numerically integrate this
 
 Note that the second method  may require the incorporation of a smoothing operator added directly to the finite difference formula. Using a fourth-order artificial viscosity, optimize the coefficient of this operator for minimum amplitude errors,
 \begin{equation}
-D_\epsilon = - \epsilon(\Delta x)^4 \pp{^4 V}{x^4}
+D_\epsilon = - \epsilon(\Delta x)^4 \pp{^4 u}{x^4}
 \;,
 \end{equation}
 where the negative sign ensures that positive dissipation is produced. Using central differences, we obtain
 \begin{equation}
-\epsilon(\Delta x)^4 \pp{^4 V}{x^4} = V_{i-2} -4V_{i-1} +6V_i -4V{i+1} +V{i+2}
+\epsilon(\Delta x)^4 \pp{^4 u}{x^4} = u_{i-2} -4u_{i-1} +6u_i -4u_{i+1} +u_{i+2}
 \;.
 \end{equation}
 The coefficient $\epsilon$ generally obeys $0 \le \epsilon \le 1/8$, with a preferred value of $\epsilon = 0.1$.
@@ -80,12 +80,12 @@ For both methods, plot the solutions at intervals of about two time units up to 
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{Prob1_C075.eps}
-\includegraphics[width=\textwidth]{Prob1_C100.eps}
-\includegraphics[width=\textwidth]{Prob1_C125.eps}
-\includegraphics[width=\textwidth]{Prob1_t8.eps}
+\includegraphics[width=0.95\textwidth]{Prob1_C075.eps}
+\includegraphics[width=0.95\textwidth]{Prob1_C100.eps}
+\includegraphics[width=0.95\textwidth]{Prob1_C125.eps}
+\includegraphics[width=0.95\textwidth]{Prob1_t8.eps}
 \\[0.5cm]
-\caption{Evolution of inviscid Burgers equation for different condition numbers, compared at time $t \sim 8$.}
+\caption{MacCormack method solution for different condition numbers, and comparison at time $t \sim 8$.}
 \label{fig:MacCormack}
 \end{center}
 \end{figure}

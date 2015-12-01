@@ -37,12 +37,13 @@ Consider the non-linear, inviscid Burgers equation for $u(x,t)$,
 \begin{equation}
 \pp{u}{t} + u \pp{u}{x} = 0
 \;,
+\label{eq:Burgers}
 \end{equation}
 with the initial conditions
 \begin{equation}
 \begin{aligned}
-u(x,0) &= 10 &\quad 0  \le\; &x \le 30 \;, \\
-u(x,0) &= 0  &\quad 30 \le\; &x \le 40 \;.
+u(x,0) &= 10 &\quad 0  \le\; &x \le 15 \;, \\
+u(x,0) &= 0  &\quad 30 \le\; &x \le 60 \;.
 \end{aligned}
 \end{equation}
 
@@ -56,10 +57,11 @@ Note that the second method  may require the incorporation of a smoothing operat
 \begin{equation}
 D_\epsilon = - \epsilon(\Delta x)^4 \pp{^4 u}{x^4}
 \;,
+\label{eq:D_epsilon}
 \end{equation}
 where the negative sign ensures that positive dissipation is produced. Using central differences, we obtain
 \begin{equation}
-\epsilon(\Delta x)^4 \pp{^4 u}{x^4} = u_{i-2} -4u_{i-1} +6u_i -4u_{i+1} +u_{i+2}
+(\Delta x)^4 \pp{^4 u}{x^4} = u_{i-2} -4u_{i-1} +6u_i -4u_{i+1} +u_{i+2}
 \;.
 \end{equation}
 The coefficient $\epsilon$ generally obeys $0 \le \epsilon \le 1/8$, with a preferred value of $\epsilon = 0.1$.
@@ -72,13 +74,65 @@ For both methods, plot the solutions at intervals of about two time units up to 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\subsection{MacCormack}
+
+We can re-write \eqref{eq:Burgers} as
+\begin{equation}
+\pp{u}{t} = - \pp{F}{x}
+\;, \quad
+\text{where}
+\quad
+F \equiv \frac{u^2}{2}
+\;.
+\end{equation}
+The MacCormack explicit method consists of a predictor and corrector step operating on this equation, using one-sided differences in alternating directions to remove any directional bias from the discretization scheme. The predictor step is
+\begin{equation}
+\hat{u}_i = u_i^n - \frac{\Delta t}{\Delta x} ( F_{i+1}^n - F_{i}^n )
+\;, \quad
+\text{where}
+\quad
+F_i^n \equiv \frac{(u_i^n)^2}{2}
+\;,
+\end{equation}
+and the corrector step is
+\begin{equation}
+u_i^{n+1} = \frac{1}{2} \left[ u_i^n + \hat{u}_i - \frac{\Delta t}{\Delta x} ( \hat{F}_{i}^n - \hat{F}_{i-1}^n ) \right]
+\;, \quad
+\text{where}
+\quad
+\hat{F_i^n} \equiv \frac{(\hat{u}_i^n)^2}{2}
+\;.
+\end{equation}
+
+\subsection{Beam and Warming}
+
+For the Beam and Warming method, the Crank-Nicolson method advances the solution in time and second-order central differences discretize the solution in space. The resulting finite difference equation is non-linear, and Beam and Warming choose to linearize it rather than iterating to find the non-linear solution. The resulting implicit equation can be written as
+\begin{equation}
+\overbrace{\left( \frac{-\Delta t}{\Delta x} \frac{u_{i-1}^n}{4} \right)}^{b_i} u_{i-1}^{n+1}
++ \overbrace{(1)}^{a_i} u_{i}^{n+1}
++ \overbrace{\left( \frac{\Delta t}{\Delta x} \frac{u_{i+1}^n}{4} \right)}^{c_i} u_{i+1}^{n+1}
+=
+\overbrace{
+u_i^n
+- \frac{\Delta t}{2 \Delta x} ( F_{i+1}^n - F_{i-1}^n )
++ \frac{\Delta t}{\Delta x} \left( (u_{i+1}^n)^2 - (u_{i-1}^n)^2 \right)
++ D_\epsilon
+}^{d_i}
+\;,
+\end{equation}
+where the coefficients $a_i$, $b_i$, $c_i$, and $d_i$ correspond to diagonal, sub-diagonal, super-diagonal, and right-hand-side terms in a tri-diagonal matrix system, and $D_\epsilon$ is defined in \eqref{eq:D_epsilon}. The solution vector is obtained via the Thomas algorithm. These concepts have been explained before, and further discussion can be found in Homework 4.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{figure}[h!]
+MacCormack solutions are presented in \figref{fig:MacCormack} for three different Courant numbers.
+
+Beam and Warming results are presented in \figref{fig:BeamWarming_Epsilon} and \figref{fig:BeamWarming}; the former explores the effect of $\epsilon$ on solution behavior, and the latter presents time-dependent results for $\epsilon=0.1$. All three requested Courant numbers are explored.
+
+\begin{figure}[p!]
 \begin{center}
 \includegraphics[width=0.85\textwidth]{Prob1_C075.eps} \\
 \includegraphics[width=0.85\textwidth]{Prob1_C100.eps} \\
@@ -90,7 +144,7 @@ For both methods, plot the solutions at intervals of about two time units up to 
 \end{center}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[p!]
 \begin{center}
 \includegraphics[width=0.85\textwidth]{Prob2_eps0125.eps} \vspace*{-0.5cm} \\
 \includegraphics[width=0.85\textwidth]{Prob2_eps0100.eps} \vspace*{-0.5cm} \\
@@ -105,7 +159,7 @@ For both methods, plot the solutions at intervals of about two time units up to 
 \end{center}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[p!]
 \begin{center}
 \includegraphics[width=0.85\textwidth]{Prob2_C075.eps} \\
 \includegraphics[width=0.85\textwidth]{Prob2_C100.eps} \\
@@ -113,7 +167,7 @@ For both methods, plot the solutions at intervals of about two time units up to 
 \includegraphics[width=0.85\textwidth]{Prob2_t8.eps}
 \\[0.5cm]
 \caption{Beam and Warming method solution for three Courant numbers, and comparison at time $t \sim 8$. The dissipation coefficient is $\epsilon = 0.1$. Little difference is observed between different Courant numbers.}
-\label{fig:MacCormack}
+\label{fig:BeamWarming}
 \end{center}
 \end{figure}
 
@@ -137,9 +191,11 @@ No external references were used other than the course notes for this assignment
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The following code listings generate all figures presented in this homework assignment.
+The following code listings generate all figures presented in this homework assignment. The Thomas algorithm code is not listed, as it is identical to that used in Homework 4.
 
-%\includecode{Problem_1.m}
+\includecode{Problem_1.m}
+\includecode{Problem_2.m}
+\includecode{Assemble_BeamWarming.m}
 
 %%
 %% DOCUMENT END

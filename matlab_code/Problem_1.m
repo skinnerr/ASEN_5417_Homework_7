@@ -106,15 +106,6 @@ function [] = Problem_1()
         ylim([0,15]);
         xlim([50,60]);
         
-%         figure();
-%         surf(x,t,u');
-%         xlabel('x');
-%         ylabel('t');
-%         title(sprintf('C = %.2f',C));
-%         xlim([x_min,x_max]);
-%         ylim([min(t),max(t)]);
-%         zlim([0,15]);
-        
     end
     
     figure(1);

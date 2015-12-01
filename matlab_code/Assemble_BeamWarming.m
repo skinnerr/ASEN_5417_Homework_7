@@ -30,7 +30,7 @@ function [diag, sub, sup, rhs] = Assemble_BeamWarming( u, epsilon, dt, dx )
     rhs(1)   = rhs(1)   + (1/4) * (dt/dx) * 10;
     rhs(end) = rhs(end) - (1/4) * (dt/dx) *  0;
     
-    % Add the artificial viscosity.
+    % Add dissipation.
     De = zeros(length(diag_range),1);
     for i = 1:length(diag_range)
         ii = i+1;
